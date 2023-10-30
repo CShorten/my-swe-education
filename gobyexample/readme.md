@@ -2,7 +2,7 @@ Examples from Go by Example (awesome stuff)
 
 https://gobyexample.com/
 
-Interesting example of `WaitGroup` + 
+Interesting example of `WaitGroup` + Semaphore (Channel with `maximumNumberOfGoroutines` capacity)
 
 ```golang
 func (p *GenerateProvider) generatePerSearchResult(ctx context.Context, in []search.Result, prompt string, cfg moduletools.ClassConfig) ([]search.Result, error) {
