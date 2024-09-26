@@ -7,43 +7,44 @@ import (
 )
 
 type VersionedValue struct {
-    timestamp time.Time
+    timestamp int64
     value     int
 }
 
-type MVCCDatabase struct {
+type MVCCStore struct {
     data map[string][]VersionedValue
     lock sync.RWMutex
 }
 
-func NewMVCCDatabase() *MVCCDatabase {
-    return &MVCCDatabase{
+func NewMVCCStore() *MVCCStore {
+    return &MVCCStore{
         data: make(map[string][]VersionedValue),
     }
 }
 
-func (db *MVCCDatabase) Write(key string, value int) {
-    db.lock.Lock()
-    defer db.lock.Unlock()
+func (store *MVCCStore) Write(key string, value int) {
+    store.lock.Lock()
+    defer store.lock.Unlock()
 
     version := VersionedValue{
-        timestamp: time.Now(),
+        timestamp: time.Now().UnixNano(),
         value:     value,
     }
-    db.data[key] = append(db.data[key], version)
+    store.data[key] = append(store.data[key], version)
 }
 
-func (db *MVCCDatabase) Read(key string, txTime time.Time) (int, bool) {
-    db.lock.RLock()
-    defer db.lock.RUnlock()
+func (store *MVCCStore) Read(key string, snapshotTime int64) (int, bool) {
+    store.lock.RLock()
+    defer store.lock.RUnlock()
 
-    versions, exists := db.data[key]
+    versions, exists := store.data[key]
     if !exists {
         return 0, false
     }
 
+    // Find the latest version not newer than snapshotTime
     for i := len(versions) - 1; i >= 0; i-- {
-        if versions[i].timestamp.Before(txTime) || versions[i].timestamp.Equal(txTime) {
+        if versions[i].timestamp <= snapshotTime {
             return versions[i].value, true
         }
     }
@@ -51,28 +52,21 @@ func (db *MVCCDatabase) Read(key string, txTime time.Time) (int, bool) {
 }
 
 func main() {
-    db := NewMVCCDatabase()
+    store := NewMVCCStore()
 
-    db.Write("x", 10)
+    // Transaction 1 starts
+    tx1Time := time.Now().UnixNano()
+    store.Write("x", 10)
 
-    tx1Time := time.Now()
-    time.Sleep(10 * time.Millisecond)
-    db.Write("x", 20)
+    // Transaction 2 starts
+    tx2Time := time.Now().UnixNano()
+    store.Write("x", 20)
 
-    var wg sync.WaitGroup
-    wg.Add(2)
+    // Transaction 1 reads
+    value, _ := store.Read("x", tx1Time)
+    fmt.Println("Transaction 1 reads x =", value)
 
-    go func() {
-        defer wg.Done()
-        value, _ := db.Read("x", tx1Time)
-        fmt.Println("Transaction 1 reads x =", value)
-    }()
-
-    go func() {
-        defer wg.Done()
-        value, _ := db.Read("x", time.Now())
-        fmt.Println("Transaction 2 reads x =", value)
-    }()
-
-    wg.Wait()
+    // Transaction 2 reads
+    value, _ = store.Read("x", tx2Time)
+    fmt.Println("Transaction 2 reads x =", value)
 }
