@@ -1,56 +1,38 @@
-import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import requests
+import threading
+import time
 
-def send_batch(batch_id, data_chunk, url):
-    """
-    Sends a batch of data to the server.
+def send_write_request(batch_data):
+    # Simulate writing batch data to the database
+    db_write(batch_data)
 
-    Args:
-        batch_id (int): Identifier for the batch.
-        data_chunk (list): The subset of data to send.
-        url (str): The server endpoint URL.
-    """
-    try:
-        # Send a POST request with the data chunk as JSON
-        response = requests.post(url, json={'batch_id': batch_id, 'data': data_chunk})
-        response.raise_for_status()
-        print(f"Batch {batch_id} sent successfully with status code {response.status_code}.")
-    except requests.exceptions.RequestException as e:
-        print(f"Error sending batch {batch_id}: {e}")
+def batch_data_generator(data_source, batch_size):
+    batch = []
+    for data in data_source:
+        batch.append(data)
+        if len(batch) == batch_size:
+            yield batch
+            batch = []
+    if batch:
+        yield batch
 
 def main():
-    # Sample data to send
-    total_data = [{'id': i, 'value': f'data_{i}'} for i in range(1, 1001)]  # 1000 items
-
-    # Define batch size
+    data_source = data_stream()  # Assume this is a generator yielding data items
     batch_size = 100
-
-    # Split data into batches
-    data_batches = [
-        total_data[i:i + batch_size]
-        for i in range(0, len(total_data), batch_size)
-    ]
-
-    # Server URL to send data to
-    url = 'http://example.com/api/upload'  # Replace with your server URL
-
-    # Create a thread pool executor
     max_workers = 5  # Number of threads in the pool
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # Dictionary to hold future to batch mapping
-        future_to_batch = {
-            executor.submit(send_batch, idx, batch, url): idx
-            for idx, batch in enumerate(data_batches, start=1)
-        }
 
-        # Process completed futures
-        for future in as_completed(future_to_batch):
-            batch_id = future_to_batch[future]
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = []
+        for batch in batch_data_generator(data_source, batch_size):
+            future = executor.submit(send_write_request, batch)
+            futures.append(future)
+
+        # Optionally, wait for all batches to complete
+        for future in as_completed(futures):
             try:
                 future.result()
-            except Exception as exc:
-                print(f"Batch {batch_id} generated an exception: {exc}")
+            except Exception as e:
+                print(f"Batch failed with exception: {e}")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
