@@ -194,3 +194,33 @@ Flat file limitations
 ^^ Even better
 
 -- What if we want to replicate the database on multiple machines for high availability?
+
+# Data Models
+
+A `data model` is a collection of concepts for describing the data in a database.
+
+```python
+class LectureNotes(BaseModel):
+  lecture_name: str
+  content: str
+  duration: date
+```
+
+### SCHEMA
+
+Haha - otherwise, you have random bits with no *meaning*.
+
+- Relational
+- Key/Values -- _Caching_
+NoSQL
+- Graph
+- Document / JSON / XML / Object
+- Wide-Column / Column-family
+ML/ Science
+- Array (vector, Matrix, Tensor)
+Legacy
+- Hierarchical
+- Network
+- Semantic
+- Entity-Relationship
+
