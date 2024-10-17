@@ -224,3 +224,10 @@ Legacy
 - Semantic
 - Entity-Relationship
 
+### Early DBMS
+
+Early database applications were difficult to build and maintain on available DBMSs in the 1960s. Computer were expensive, humans were cheap.
+
+Tight coupling between logical and physical layers.
+
+Programmers had to know what queries the application would execute before they could deploy the database.
