@@ -231,3 +231,9 @@ Early database applications were difficult to build and maintain on available DB
 Tight coupling between logical and physical layers.
 
 Programmers had to know what queries the application would execute before they could deploy the database.
+
+Andy describes the importance of abstractions over hash tables and b-trees in early days of DBMS 🔥
+
+Edgar Codd - `A Relational Model of Data for Large Shared Data Banks`
+
+
