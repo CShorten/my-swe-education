@@ -177,3 +177,20 @@ func main() {
 }
 ```
 
+# Data Integrity
+
+Flat file limitations
+
+-- How do you find a particular recrod...
+
+-- What if we now wnat to create a new application that uses the same database? What if that application is running on a different machine?
+
+# What if two threads try to write to the same file at the same time?
+
+^ Love this one
+
+-- What if the machine crashes while our progarm is updating a record?
+
+^^ Even better
+
+-- What if we want to replicate the database on multiple machines for high availability?
