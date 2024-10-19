@@ -48,9 +48,9 @@ for scanner.Scan() {
 ```
 
 Why is this slow?
+- Parsing each line sequentially...
 - Disk I/O Bottleneck -- reading from disk is slower than accessing memory.
-- Parsing each line individually
-- Lack of indexing - no quick way to find records matching a condition...
+- Lack of indexing - no quick way to find records matching a condition... (particular to the flat file example)
 
 ## Brainstorming -- How do you read files faster?
 
@@ -183,7 +183,7 @@ Flat file limitations
 
 -- How do you find a particular recrod...
 
--- What if we now wnat to create a new application that uses the same database? What if that application is running on a different machine?
+-- What if we now want to create a new application that uses the same database? What if that application is running on a different machine?
 
 # What if two threads try to write to the same file at the same time?
 
