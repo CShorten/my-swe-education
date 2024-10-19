@@ -181,19 +181,21 @@ func main() {
 
 Flat file limitations
 
--- How do you find a particular recrod...
+1. How do you find a particular record?
 
--- What if we now want to create a new application that uses the same database? What if that application is running on a different machine?
+2. What if we now want to create a new application that uses the same database? What if that application is running on a different machine?
 
-# What if two threads try to write to the same file at the same time?
+3. What if two threads try to write to the same file at the same time?
 
 ^ Love this one
 
--- What if the machine crashes while our progarm is updating a record?
+4. What if the machine crashes while our program is updating a record?
 
 ^^ Even better
 
--- What if we want to replicate the database on multiple machines for high availability?
+5. What if we want to replicate the database on multiple machines for high availability?
+
+With #3, how about two machines try to write to the same file at the same time? And with #4 what if 1 / n or k / n machines crash?
 
 # Data Models
 
