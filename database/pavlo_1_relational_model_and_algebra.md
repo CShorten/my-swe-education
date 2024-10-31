@@ -238,4 +238,29 @@ Andy describes the importance of abstractions over hash tables and b-trees in ea
 
 Edgar Codd - `A Relational Model of Data for Large Shared Data Banks`
 
+### Codasyl
+
+Back and forth between relational database people and COBOL.
+
+### Relational Model
+
+The relational model defines a database abstraction based on relations to avoid maintenance overhead.
+
+Key tenets:
+- Store database in simple data structures (relations).
+- Physical storage left up to the DBMS implementation.
+- Access data through high-level language, DBMS figures out best execution strategy.
+  
+### Structure
+The definition of the database's relations and their contents independent of their physical representation.
+
+### Integrity
+Ensure the database's contents satisfy constraints
+
+### Manipulation
+Programming interface for accessing and modifying a database's contents.
+
+
+
+
 
