@@ -383,3 +383,5 @@ func main() {
    - Implement row-level locking
    - Use MVCC for concurrent operations
    - Consider parallel execution for large operations
+
+[More details](https://github.com/CShorten/my-swe-education/blob/main/database/nuggets/relational-building-blocks.md)
