@@ -7,7 +7,7 @@
 ### Example -- Digital Music
 
 ```python
-class Aritst(BaseModel):
+class Artist(BaseModel):
   name: str
   year: int
   country: enum
@@ -47,7 +47,7 @@ for scanner.Scan() {
 }
 ```
 
-Why is this slow?
+Why is this slow? (More in a broad sense to introduce the concept of DBs)
 - Parsing each line sequentially...
 - Disk I/O Bottleneck -- reading from disk is slower than accessing memory.
 - Lack of indexing - no quick way to find records matching a condition... (particular to the flat file example)
