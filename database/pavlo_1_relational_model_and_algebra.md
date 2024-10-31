@@ -260,7 +260,38 @@ Ensure the database's contents satisfy constraints
 ### Manipulation
 Programming interface for accessing and modifying a database's contents.
 
+# Data Independence
 
+Isolate the user/application from low-level data representation.
 
+- The user only worries about high-level application logic.
+- DBMS optimizes the layout according to operating environment, database contents, and workload.
+- DBMS can then re-optimize the database if/when these factors changes.
 
+**Logical Data Independence** VERSUS **Physical Data Independence**
+
+### Relational Model
+
+A relation is an unordered set that contains the relationship of attributes that represent entities.
+
+A tuple is a set of attribute values (aka its domain) in the relation.
+- Values are normally atomic / scalar.
+- The special value `NULL` is a member of every domain (if allowed).
+
+`n-ary Relation = Table with n columns`
+
+## Relational Model: Primary Keys
+
+A relation's primary key uniquely identifies a single tuple.
+
+Some DBMSs automatically create an internal primary key if a table does not define one.
+
+DBMS can auto-generate unique primary keys via an identity column:
+- `IDENTITY` (SQL Standard)
+- `SEQUENCE` (PostgreSQL / Oracle)
+- `AUTO_INCREMENT` (MySQL)
+
+## Foreign Keys
+
+A **foreign key** specifies that an attribute from one relation maps to a tuple in another relation.
 
