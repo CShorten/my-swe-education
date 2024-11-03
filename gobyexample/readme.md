@@ -2,7 +2,7 @@ Examples from Go by Example (awesome stuff)
 
 https://gobyexample.com/
 
-Interesting example of `WaitGroup` + Semaphore (Channel with `maximumNumberOfGoroutines` capacity)
+Interesting example of `WaitGroup` + Semaphore in Weaviate `generative-search` modules (Channel with `maximumNumberOfGoroutines` capacity)
 
 ```golang
 func (p *GenerateProvider) generatePerSearchResult(ctx context.Context, in []search.Result, prompt string, cfg moduletools.ClassConfig) ([]search.Result, error) {
@@ -25,4 +25,4 @@ func (p *GenerateProvider) generatePerSearchResult(ctx context.Context, in []sea
 ```
 
 Analysis of above:
-In Golang, semaphores are not provided as a built-in construct, but they can be implemented using channels. Channels are used for communication between goroutines by creating a channel with a capacity, you create a semaphore. The semaphore limits the number of concurrent goroutines. When you try to send an element to a buffered channel that is already full, the operation will "block" - this means that the goroutine which is attempting to send the element will pause and wait. It won't continue executing until there's space available in the channel.
+In Golang, semaphores are not provided as a built-in construct, but they can be implemented using channels. Channels are used for communication between goroutines by creating a channel with a capacity, you create a semaphore. The semaphore limits the number of **concurrent goroutines**. When you try to send an element to a buffered channel that is already full, the operation will "block" - this means that the goroutine which is attempting to send the element will pause and wait. It won't continue executing until there's space available in the channel.
