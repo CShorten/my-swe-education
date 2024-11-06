@@ -196,9 +196,3 @@ def calculate_grid_dim(size):
 
 ## Conclusion
 While Python with Numba may not offer the same low-level control as C++ CUDA, it provides a more accessible way to leverage GPU acceleration while maintaining good performance through proper memory access patterns and optimization techniques.
-
-## References
-1. Numba Documentation
-2. "Python High Performance" by Gabriele Lanaro
-3. NVIDIA CUDA Python Documentation
-4. Numba CUDA User Guide
