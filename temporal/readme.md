@@ -1,5 +1,19 @@
 # Temporal Notes - Overview
 
+Running the quick example:
+
+`worker` hosts the workflow and activity implementations
+
+```bash
+python3 worker.py
+```
+
+`starter` creates the workflow execution.
+
+```bash
+python3 starter.py
+```
+
 ## Core Mental Models
 
 ### The Director-Actor Analogy
