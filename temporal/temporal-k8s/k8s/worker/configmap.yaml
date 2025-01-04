@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: temporal-worker-config
+data:
+  TEMPORAL_NAMESPACE: "your-namespace"
+  TEMPORAL_TASKQUEUE: "greeting-tasks"
+  TEMPORAL_HOST: "foo.bar.temporal.cloud"

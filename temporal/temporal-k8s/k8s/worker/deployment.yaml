@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-worker
+spec:
+  replicas: 3  # Run multiple workers for scalability
+  selector:
+    matchLabels:
+      app: temporal-worker
+  template:
+    metadata:
+      labels:
+        app: temporal-worker
+    spec:
+      containers:
+      - name: worker
+        image: your-registry/temporal-worker:latest
+        imagePullPolicy: Always
+        env:
+        - name: TEMPORAL_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              name: temporal-worker-config
+              key: TEMPORAL_NAMESPACE
+        - name: TEMPORAL_TASKQUEUE
+          valueFrom:
+            configMapKeyRef:
+              name: temporal-worker-config
+              key: TEMPORAL_TASKQUEUE
+        volumeMounts:
+        - name: temporal-certs
+          mountPath: /etc/temporal/certs
+          readOnly: true
+      volumes:
+      - name: temporal-certs
+        secret:
+          secretName: temporal-worker-certs
