@@ -15,3 +15,5 @@ Educational materials, maybe useful to document.
 - Python
 - Queueing Theory
 - SWE Concepts
+- Temporal
+- Terraform
