@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: temporal-orchestrator-config
+data:
+  TEMPORAL_NAMESPACE: "your-namespace"
+  TEMPORAL_TASKQUEUE: "greeting-tasks"
+  TEMPORAL_HOST: "foo.bar.temporal.cloud"
+  # You might want to configure how often the orchestrator starts workflows
+  WORKFLOW_INTERVAL_SECONDS: "300"  # Start workflows every 5 minutes
