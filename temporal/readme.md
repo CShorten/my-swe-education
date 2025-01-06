@@ -1,19 +1,5 @@
 # Temporal Notes - Overview
 
-Running the quick example:
-
-`worker` hosts the workflow and activity implementations
-
-```bash
-python3 worker.py
-```
-
-`starter` creates the workflow execution.
-
-```bash
-python3 starter.py
-```
-
 ## Core Mental Models
 
 ### The Director-Actor Analogy
@@ -46,6 +32,56 @@ Activities must be idempotent when possible. This means:
 - Activities should handle being run multiple times safely
 - If an activity fails, it might run again from the start
 - Activities should check for and handle duplicate executions gracefully
+
+# You will typically have a `worker.run()` somewhere and a `temporal_client.execute_workflow()` somewhere like these
+
+### run_worker.py
+```python3
+import asyncio
+
+from temporalio import activity, workflow
+from temporalio.client import Client
+from temporalio.worker import Worker
+
+from activities import say_hello
+from workflows import SayHello
+
+async def main():
+    client = await Client.connect("localhost:7233", namespace="default")
+    # Run the worker
+    worker = Worker(
+        client, task_queue="hello-task-queue", workflows=[SayHello], activities=[say_hello]
+    )
+    await worker.run()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### run_workflow.py
+```python3
+import asyncio
+
+from run_worker import SayHello
+from temporalio.client import Client
+
+
+async def main():
+    # Create client connected to server at the given address
+    client = await Client.connect("localhost:7233")
+
+    # Execute a workflow
+    result = await client.execute_workflow(
+        SayHello.run, "Temporal", id="hello-workflow", task_queue="hello-task-queue"
+    )
+
+    print(f"Result: {result}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
 
 ## Comparisons with Other Systems
 
