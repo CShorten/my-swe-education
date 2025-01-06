@@ -33,7 +33,7 @@ Activities must be idempotent when possible. This means:
 - If an activity fails, it might run again from the start
 - Activities should check for and handle duplicate executions gracefully
 
-# You will typically have a `worker.run()` somewhere and a `temporal_client.execute_workflow()` somewhere like these
+### You will typically have a `worker.run()` somewhere and a `temporal_client.execute_workflow()` somewhere like these
 
 ### run_worker.py
 ```python3
