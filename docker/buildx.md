@@ -8,4 +8,4 @@ Key benefits:
 - Concurrent build steps
 - More efficient layer management
 
-In your workflow, it's used with --platform linux/amd64 to ensure the image is built specifically for AMD64 architecture, which is important for compatibility with your deployment environment
+Say --platform linux/amd64 to ensure the image is built specifically for AMD64 architecture, which is important for compatibility with your deployment environment.
