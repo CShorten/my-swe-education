@@ -4,6 +4,7 @@ Educational materials, maybe useful to document.
 - C
 - Concepts
 - CUDA
+- Cloud Databases
 - Databases
 - Distributed Systems
 - Frontend
