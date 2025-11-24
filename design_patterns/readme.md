@@ -1,3 +1,8 @@
+Quick Notes
+
+- Inside the Hexagon, Outside the Hexagon
+
+# List
 1. Singleton
 Ensures a class has only one instance throughout the application and provides a global point of access to it. Commonly used for configuration managers, logging, or database connections.
 2. Factory
