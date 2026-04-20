@@ -23,6 +23,16 @@ A service is a **use-case orchestrator**. It doesn't contain business rules (tho
 
 Think of it as the answer to the question: *"What does my application do, independent of how it's deployed or stored?"*
 
+## The Service Struct: Dependencies as Ports
+
+```go
+type Service struct {
+    store             ports.DataStore
+    embeddingService  ports.EmbeddingService
+    modelService      ports.ModelService
+}
+```
+
 ## Concrete Example
 
 Mapping this to something close to your world — imagine an Engram-like memory service:
