@@ -33,6 +33,8 @@ type Service struct {
 }
 ```
 
+Every field is a `ports.*` interface, never a concrete type. This is the heart of the hexagonal architecture: the core depends only on abstractions it defines itself. These are driven ports, the interfaces the core needs the outside world to fulfill for it.
+
 ## Concrete Example
 
 Mapping this to something close to your world — imagine an Engram-like memory service:
