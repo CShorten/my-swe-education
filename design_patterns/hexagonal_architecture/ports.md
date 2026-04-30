@@ -2,6 +2,8 @@
 
 Ports are where hexagonal architecture earns its keep. They're the negotiating interface: the domain writes the contract, and everyone else has to sign it.
 
+Ports are abstract interfaces (Python `Protocol` classes or Go `Interfaces`) that define what capabilities the domain layer needs without specifying how they are implemented. Concrete implementations live in `adapters/` and plug into these protocols, keeping the domain free of infrastructure dependencies.
+
 ## What a port actually is
 
 A port is **an interface, defined inside the domain**, that describes one cohesive capability — either something the domain offers or something it needs. That's it. No implementation, no framework types, no JSON, no SQL. Just a contract expressed in the domain's own language.
