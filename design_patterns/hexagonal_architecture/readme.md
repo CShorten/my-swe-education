@@ -5,3 +5,5 @@ Hexagonal Architecture (also called Ports and Adapters, introduced by Alistair C
 ## Misc. Nuggets
 
 Driving (primary) adapters drive the application — like REST controllers or CLI handlers. Driven (secondary) adapters are driven BY the application — like database or messaging clients.
+
+For example, a Postgres repository is driven by the core — the application calls it to persist data. REST controllers, gRPC handlers, and CLI handlers all drive the application.
