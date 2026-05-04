@@ -1,7 +1,5 @@
 # Hexagonal Architecture
 
-<img width="1254" height="1254" alt="hexagonal-architecture" src="https://github.com/user-attachments/assets/250300d3-23c8-4873-9f9c-32705f803c31" />
-
 <br />
 <br />
 
