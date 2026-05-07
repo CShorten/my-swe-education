@@ -8,6 +8,29 @@ The naive solutions are all bad:
 
 - Per-node read-write lock — readers block writers and vice versa, plus the lock-acquisition overhead at every hop in a graph traversal is brutal (you might touch thousands of nodes per query)
 
+```
+A concrete walkthrough
+Imagine node X has neighbors [A, B, C], and a writer wants to add D to make it [A, B, C, D].
+With per-node locks:
+
+Writer acquires write lock on X
+Reader trying to traverse through X waits
+Writer modifies X's neighbor list to [A, B, C, D]
+Writer releases lock
+Reader acquires read lock on X, sees [A, B, C, D]
+Reader follows pointer to (say) D, but D was just added — has it been fully wired up? The lock on X doesn't tell you anything about D's state. Now you need lock ordering protocols, deadlock avoidance, etc.
+
+With COW:
+
+Writer reads X's current state: neighbors [A, B, C], all pointing to the originals
+Writer allocates X', a copy of X with neighbors [A, B, C, D]. D is also a fresh node, fully constructed
+Writer atomically swaps the pointer in the index that says "this is node X" from X to X'
+Reader that started before the swap holds a reference to X. It traverses X's neighbors [A, B, C] — never sees D, never sees a partial state
+Reader that starts after the swap sees X', traverses [A, B, C, D], sees D as a fully constructed node
+
+Notice that in the COW case, at no point did the reader and writer have to coordinate directly. The atomic pointer swap is the only synchronization, and it's a hardware primitive — no waiting, no blocking, no lock object.
+```
+
 - Stop-the-world during snapshots — pauses ingestion for as long as the snapshot takes, which on a 100M-vector index could be many seconds
 
 What you want is for readers to never block, never lock, and always see a consistent view, while writers can keep mutating in the background.
