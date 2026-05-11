@@ -1,5 +1,7 @@
 # Hexagonal Architecture
 
+The core idea is dependency direction, everything points inward.
+
 <img width="1254" height="1254" alt="ChatGPT Image May 4, 2026, 04_57_21 PM" src="https://github.com/user-attachments/assets/aa2cfe9a-0fe6-4e7a-ab2e-7d24bba52b32" />
 
 <br />
